@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Excel Center </title>
+
+    <style>
+      /* google map, map info */
+      #map {
+        height: 100%;
+      }
+
+  	/* set map to size of screen */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+  	/* set text boxes at the top of map */
+      #top-search-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: white;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      /* set text boxes at the left of map */
+        #left-panel {
+          position: absolute;
+          top: 0px;
+          left: 0%;
+          width: 20%;
+          height: 100%;
+          z-index: 5;
+          background-color: white;
+          padding: 5px;
+          border: 1px solid #999;
+          text-align: left;
+          line-height: 15px;
+          padding-left: 10px;
+          overflow: auto
+        }
+
+    </style>
+
+  </head>
+  <body>
+    <div id="map"></div>
+
+  	<!--search panel  <input id="SerchValue"> -->
+    <div id="top-search-panel">
+      <select name="Materials" id="SerchValue">
+        <option value="3Dprinter">3-D Printers</option>
+        <option value="Tshirtprinter">T-Shirt Printers</option>
+        <option value="computer labs">Computer Labs</option>
+      </select>
+      <button type="button" id ="submitvalue">Submit</button>
+    </div>
+
+    <div id="left-panel">
+      <b> EXL Center Resource Information </b>
+      <br>
+      <br>
+      <a href="mailto:bro2@zips.uakron.edu?Subject=exlctrresources" target="_top">Have an idea for a new resource?</a>
+      <br>
+      <br>
+      EXL Center contact info: <a href="mailto:bro2@zips.uakron.edu?Subject=exlctrresources" target="_top">bro2@zips.uakron.edu</a>
+    </div>
+
+
+
+    <script>
+
+    // initalize map location in the map window, jnode
+    function initMap() {
+        var UAkron = {lat: 41.0761913, lng: -81.5122959};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: UAkron
+    });
+      // event listeners
+        var el = document.getElementById("submitvalue");
+        el.addEventListener("click", ShowcorrectMarkers, false);
+
+    // selection function to show different markers
+    function ShowcorrectMarkers(){
+      var temp;
+      temp = document.getElementById("SerchValue").value;
+      //alert(temp);
+      if (temp == "3Dprinter"){ var tempstring ='<b> EXL Center Resource Information</b><br><br>'+ BLibary3dprint(); document.getElementById('left-panel').innerHTML=tempstring;}
+      if (temp == "Tshirtprinter"){var tempstring ='<b> EXL Center Resource Information</b><br><br>'+ StudentUnionTshirtprinter() + '<br>' + '<br>' + folkhallTshirtprinter(); document.getElementById('left-panel').innerHTML=tempstring;}
+      if (temp == "computer labs"){var tempstring ='<b> EXL Center Resource Information</b><br><br>'+ CAScomputerlab() + '<br>' + '<br>' + BLibarycomputerlab(); document.getElementById('left-panel').innerHTML=tempstring;}
+
+    }
+
+        // 3-D PRINTERS
+        // add beirce libary marker and info to map (41.077093,-81.510234)
+        function BLibary3dprint(){
+          var BLibary_info = '<b>' + 'Resource: Beirce libary 3-D Printer' + '</b>' + '<br>' + 'Department:' + '<br>' + 'College:' + '<br>' + 'Location: ' + '<br>' + 'Resource Owner: ' + '<br>' + 'Resource Operator:' + '<br>' + 'Training Required:' + '<br>' + 'Hours of Public Operation:' + '<br>' + 'Cost:' + '<br>' + 'Access:' + '<br>' + 'Description:';
+          var BLibary_position =  new google.maps.LatLng(41.077093,-81.510234);
+          var BLibary_infowindow = new google.maps.InfoWindow({
+          content: BLibary_info
+          });
+
+          var BLibary_marker = new google.maps.Marker({
+            position: BLibary_position,
+            map: map,
+            title: 'Beirce Libary'
+          });
+
+          BLibary_marker.addListener('click', function() {
+            BLibary_infowindow.open(map, BLibary_marker);
+          });
+          return BLibary_info;
+        }
+
+        // T-SHIRT PRINTERS
+        // add Student Union marker and info to map (41.075747,-81.512468) for T-shirt printers
+        function StudentUnionTshirtprinter(){
+          var StudentUnion_info = '<b>' + 'Resource: Student Union T-Shirt Printer' + '</b>' + '<br>' + 'Department:' + '<br>' + 'College:' + '<br>' + 'Location: ' + '<br>' + 'Resource Owner: ' + '<br>' + 'Resource Operator:' + '<br>' + 'Training Required:' + '<br>' + 'Hours of Public Operation:' + '<br>' + 'Cost:' + '<br>' + 'Access:' + '<br>' + 'Description:';
+          var StudentUnion_position =  new google.maps.LatLng(41.075747,-81.512468);
+          var StudentUnion_infowindow = new google.maps.InfoWindow({
+            content: StudentUnion_info
+          });
+
+          var StudentUnion_marker = new google.maps.Marker({
+            position: StudentUnion_position,
+            map: map,
+            title: 'Student Union'
+          });
+
+          StudentUnion_marker.addListener('click', function() {
+            StudentUnion_infowindow.open(map, StudentUnion_marker);
+          });
+          return StudentUnion_info;
+        }
+
+        // add folk hall marker and info to map (41.073465, -81.518033) for T-shirt printers
+        function folkhallTshirtprinter(){
+          var folkhall_info = '<b>' + 'Resource: Folk Hall T-Shirt Printer' + '</b>' + '<br>' + 'Department:' + '<br>' + 'College:' + '<br>' + 'Location: ' + '<br>' + 'Resource Owner: ' + '<br>' + 'Resource Operator:' + '<br>' + 'Training Required:' + '<br>' + 'Hours of Public Operation:' + '<br>' + 'Cost:' + '<br>' + 'Access:' + '<br>' + 'Description:';
+          var folkhall_position =  new google.maps.LatLng(41.073465,-81.518033);
+          var folkhall_infowindow = new google.maps.InfoWindow({
+            content: folkhall_info
+          });
+
+          var folkhall_marker = new google.maps.Marker({
+            position: folkhall_position,
+            map: map,
+            title: 'Folk hall'
+          });
+
+          folkhall_marker.addListener('click', function() {
+            folkhall_infowindow.open(map, folkhall_marker);
+          });
+          return folkhall_info;
+        }
+
+
+        // COMPUTER LABS
+        // add College of Arts and Sciences marker and info to map (41.077914, -81.510563) for a computer lab
+        function CAScomputerlab(){
+          var CAS_info = '<b>' + 'Resource: CAS Computer Lab' + '</b>' + '<br>' + 'Department:' + '<br>' + 'College:' + '<br>' + 'Location: ' + '<br>' + 'Resource Owner: ' + '<br>' + 'Resource Operator:' + '<br>' + 'Training Required:' + '<br>' + 'Hours of Public Operation:' + '<br>' + 'Cost:' + '<br>' + 'Access:' + '<br>' + 'Description:';
+          var CAS_position =  new google.maps.LatLng(41.077914, -81.510563);
+          var CAS_infowindow = new google.maps.InfoWindow({
+            content: CAS_info
+          });
+
+          var CAS_marker = new google.maps.Marker({
+            position: CAS_position,
+            map: map,
+            title: 'College of Arts and Sciences'
+          });
+
+          CAS_marker.addListener('click', function() {
+            CAS_infowindow.open(map, CAS_marker);
+          });
+          return CAS_info;
+        }
+
+        // add Student Union marker and info to map (41.077914, -81.510563) for a computer lab
+        function BLibarycomputerlab(){
+          var BLibary_info = '<b>' + 'Resource: Beirce Libary Computer Labs' + '</b>' + '<br>' + 'Department:' + '<br>' + 'College:' + '<br>' + 'Location: ' + '<br>' + 'Resource Owner: ' + '<br>' + 'Resource Operator:' + '<br>' + 'Training Required:' + '<br>' + 'Hours of Public Operation:' + '<br>' + 'Cost:' + '<br>' + 'Access:' + '<br>' + 'Description:';
+          var BLibary_position =  new google.maps.LatLng(41.077093,-81.510234);
+          var BLibary_infowindow = new google.maps.InfoWindow({
+          content: BLibary_info
+          });
+
+          var BLibary_marker = new google.maps.Marker({
+            position: BLibary_position,
+            map: map,
+            title: 'Beirce Libary'
+          });
+
+          BLibary_marker.addListener('click', function() {
+            BLibary_infowindow.open(map, BLibary_marker);
+          });
+          return BLibary_info;
+        }
+
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQqeL2-6rKu9mvoSCVjB53VqPow-6NojM&callback=initMap">
+    </script>
+  </body>
+</html>
